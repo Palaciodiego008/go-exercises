@@ -16,7 +16,7 @@ func doSomething(ctx context.Context) {
 		printCh <- num
 	}
 
-	cancelCtx()
+	defer cancelCtx()
 
 	// doSomething() is done
 	time.Sleep(100 * time.Second)

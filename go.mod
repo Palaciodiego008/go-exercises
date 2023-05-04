@@ -24,5 +24,6 @@ require (
 require (
 	github.com/fogleman/gg v1.3.0
 	github.com/goki/freetype v0.0.0-20220119013949-7a161fd3728c
+	github.com/twpayne/go-polyline v1.1.1
 	golang.org/x/image v0.5.0
 )
