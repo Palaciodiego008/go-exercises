@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-const boardSize = 9
+const boardSize = 3
 
 func main() {
 	var board [boardSize][boardSize]int
@@ -13,7 +13,7 @@ func main() {
 			fmt.Scanf("%d", &board[i][j])
 		}
 	}
-	printBoard(board)
+	defer printBoard(board)
 }
 
 func printBoard(board [boardSize][boardSize]int) {
@@ -25,7 +25,7 @@ func printBoard(board [boardSize][boardSize]int) {
 			if j%3 == 0 {
 				fmt.Print("| ")
 			}
-			fmt.Print(board[i][j])
+			fmt.Print(board[j][i])
 			fmt.Print(" ")
 		}
 		fmt.Println("|")
