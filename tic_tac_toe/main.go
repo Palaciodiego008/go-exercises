@@ -21,6 +21,50 @@ func (p Player) GetScore() int {
 	return p.Score
 }
 
+func main() {
+	player1 := new(Player)
+	player2 := new(Player)
+
+	fmt.Println("Enter player 1 name")
+	fmt.Scanln(&player1.Name)
+	fmt.Println("Enter player 2 name")
+	fmt.Scanln(&player2.Name)
+
+	var board Board
+	var currentPlayer Player = *player1
+	var winner string
+
+	if currentPlayer.GetName() == player1.GetName() {
+		currentPlayer = *player2
+	} else {
+		currentPlayer = *player1
+	}
+
+	gameMap := make(map[string]Player)
+	gameMap[player1.GetName()] = *player1
+	gameMap[player2.GetName()] = *player2
+
+	for {
+		fmt.Println(currentPlayer.GetName(), "turn")
+		board.Print()
+
+		x, y := GetMove()
+
+		if board.IsValidMove(x, y) {
+			board = board.MakeMove(x, y, currentPlayer.GetName())
+			winner = board.CheckWinner()
+			if winner != "" {
+				break
+			}
+			if board.IsFull() {
+				break
+			}
+		} else {
+			fmt.Println("Invalid move")
+		}
+	}
+}
+
 func (b Board) Print() {
 	fmt.Println("  0 1 2")
 	for i := 0; i < len(b.size); i++ {
@@ -100,48 +144,4 @@ func PlayAgain() bool {
 	}
 
 	return playAgain == "y"
-}
-
-func main() {
-	player1 := new(Player)
-	player2 := new(Player)
-
-	fmt.Println("Enter player 1 name")
-	fmt.Scanln(&player1.Name)
-	fmt.Println("Enter player 2 name")
-	fmt.Scanln(&player2.Name)
-
-	var board Board
-	var currentPlayer Player = *player1
-	var winner string
-
-	if currentPlayer.GetName() == player1.GetName() {
-		currentPlayer = *player2
-	} else {
-		currentPlayer = *player1
-	}
-
-	gameMap := make(map[string]Player)
-	gameMap[player1.GetName()] = *player1
-	gameMap[player2.GetName()] = *player2
-
-	for {
-		fmt.Println(currentPlayer.GetName(), "turn")
-		board.Print()
-
-		x, y := GetMove()
-
-		if board.IsValidMove(x, y) {
-			board = board.MakeMove(x, y, currentPlayer.GetName())
-			winner = board.CheckWinner()
-			if winner != "" {
-				break
-			}
-			if board.IsFull() {
-				break
-			}
-		} else {
-			fmt.Println("Invalid move")
-		}
-	}
 }
